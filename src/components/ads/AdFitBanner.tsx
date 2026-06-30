@@ -12,10 +12,14 @@ import { cn } from "@/lib/utils";
  * 반드시 아래처럼 키를 명시적으로 참조해야 합니다.
  */
 export const AD_UNITS = {
-  header: process.env.NEXT_PUBLIC_ADFIT_UNIT_HEADER,
-  inContent: process.env.NEXT_PUBLIC_ADFIT_UNIT_INCONTENT,
-  sidebar: process.env.NEXT_PUBLIC_ADFIT_UNIT_SIDEBAR,
-  footer: process.env.NEXT_PUBLIC_ADFIT_UNIT_FOOTER,
+  header:
+    process.env.NEXT_PUBLIC_ADFIT_UNIT_HEADER || "DAN-X2960oC9n2QqltY4",
+  inContent:
+    process.env.NEXT_PUBLIC_ADFIT_UNIT_INCONTENT || "DAN-l5Pbd8v43l5ycB2Q",
+  sidebar:
+    process.env.NEXT_PUBLIC_ADFIT_UNIT_SIDEBAR || "DAN-YLnUp8hh3dzmo33G",
+  // 푸터용 728x90 단위 미발급 — 단위 추가 후 env 또는 기본값을 채우면 활성화
+  footer: process.env.NEXT_PUBLIC_ADFIT_UNIT_FOOTER || "",
 } as const;
 
 export type AdSlot = keyof typeof AD_UNITS;
@@ -52,7 +56,8 @@ export function AdFitBanner({
   className,
 }: AdFitBannerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const adUnit = unit ?? (slot ? AD_UNITS[slot] : undefined);
+  const resolved = unit ?? (slot ? AD_UNITS[slot] : undefined);
+  const adUnit = resolved && resolved.length > 0 ? resolved : undefined;
 
   useEffect(() => {
     const el = containerRef.current;
@@ -81,6 +86,9 @@ export function AdFitBanner({
       el.innerHTML = "";
     };
   }, [adUnit, width, height]);
+
+  // 광고 단위가 없으면 프로덕션에서는 아무것도 렌더링하지 않음(빈 자리표시자 숨김)
+  if (!adUnit && process.env.NODE_ENV === "production") return null;
 
   return (
     <div

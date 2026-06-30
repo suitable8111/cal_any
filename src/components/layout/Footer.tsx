@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { calculators } from "@/lib/calculators";
-import { AdFitBanner } from "@/components/ads/AdFitBanner";
 
 export function Footer() {
   return (
     <footer className="mt-16 border-t border-border bg-muted/30">
       <div className="mx-auto max-w-5xl px-4 py-10">
-        {/* 푸터 위 광고 (레이아웃 최적화 배치) */}
-        <AdFitBanner slot="footer" width={728} height={90} className="mb-8" />
+        {/* 푸터 광고: 728x90 단위 발급 후 Footer 에 <AdFitBanner slot="footer" .../> 추가 */}
 
         <div className="grid gap-8 sm:grid-cols-2">
           <div>
