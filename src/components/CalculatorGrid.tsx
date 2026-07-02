@@ -3,9 +3,51 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Search, ArrowRight } from "lucide-react";
-import { calculators } from "@/lib/calculators";
+import {
+  CATEGORY_LABELS,
+  calculators,
+  type CalculatorCategory,
+  type CalculatorMeta,
+} from "@/lib/calculators";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+
+const CATEGORY_ORDER: CalculatorCategory[] = [
+  "financial",
+  "lifestyle",
+  "health",
+  "dev",
+];
+
+function CalculatorCard({ c }: { c: CalculatorMeta }) {
+  return (
+    <Link
+      href={c.slug}
+      className={cn(
+        "group relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-primary/40"
+      )}
+    >
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-60",
+          c.accent
+        )}
+      />
+      <div className="relative">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-background/70 text-2xl shadow-sm">
+          {c.emoji}
+        </div>
+        <h3 className="flex items-center gap-1 text-lg font-semibold tracking-tight">
+          {c.title}
+          <ArrowRight className="h-4 w-4 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
+        </h3>
+        <p className="mt-1.5 text-sm text-muted-foreground">
+          {c.description}
+        </p>
+      </div>
+    </Link>
+  );
+}
 
 export function CalculatorGrid() {
   const [query, setQuery] = useState("");
@@ -21,6 +63,13 @@ export function CalculatorGrid() {
     });
   }, [query]);
 
+  const grouped = useMemo(() => {
+    return CATEGORY_ORDER.map((category) => ({
+      category,
+      items: filtered.filter((c) => c.category === category),
+    })).filter((group) => group.items.length > 0);
+  }, [filtered]);
+
   return (
     <div>
       {/* 실시간 검색 바 */}
@@ -29,7 +78,7 @@ export function CalculatorGrid() {
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="계산기 검색 (예: 나이, 취득세, 과속, 충전)"
+          placeholder="계산기 검색 (예: 예적금, 대출, 나이, 취득세, 과속, 충전)"
           className="h-14 pl-12 text-base"
           aria-label="계산기 검색"
         />
@@ -40,34 +89,18 @@ export function CalculatorGrid() {
           “{query}”에 해당하는 계산기가 없습니다.
         </p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-          {filtered.map((c) => (
-            <Link
-              key={c.slug}
-              href={c.slug}
-              className={cn(
-                "group relative overflow-hidden rounded-lg border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-primary/40"
-              )}
-            >
-              <div
-                className={cn(
-                  "pointer-events-none absolute inset-0 bg-gradient-to-br opacity-60",
-                  c.accent
-                )}
-              />
-              <div className="relative">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-background/70 text-2xl shadow-sm">
-                  {c.emoji}
-                </div>
-                <h3 className="flex items-center gap-1 text-lg font-semibold tracking-tight">
-                  {c.title}
-                  <ArrowRight className="h-4 w-4 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
-                </h3>
-                <p className="mt-1.5 text-sm text-muted-foreground">
-                  {c.description}
-                </p>
+        <div className="space-y-10">
+          {grouped.map(({ category, items }) => (
+            <section key={category}>
+              <h2 className="mb-4 text-lg font-bold tracking-tight text-foreground">
+                {CATEGORY_LABELS[category]}
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+                {items.map((c) => (
+                  <CalculatorCard key={c.slug} c={c} />
+                ))}
               </div>
-            </Link>
+            </section>
           ))}
         </div>
       )}
