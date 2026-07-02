@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PwaRegister } from "@/components/PwaRegister";
 import { siteConfig } from "@/lib/site";
+
+const GA_MEASUREMENT_ID = "G-W2433ST4YH";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -94,6 +97,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
       </body>
     </html>
   );
