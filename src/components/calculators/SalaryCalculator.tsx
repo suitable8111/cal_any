@@ -103,6 +103,9 @@ function calcSalary(annualSalary: number, nonTaxableMonthly: number, dependents:
   };
 }
 
+const TABLE_STEP = 1_000_000;
+const TABLE_MAX = 150_000_000;
+
 export function SalaryCalculator() {
   const [salaryStr, setSalaryStr] = useState("");
   const [nonTaxableStr, setNonTaxableStr] = useState("200000");
@@ -116,6 +119,18 @@ export function SalaryCalculator() {
     () => (salary > 0 ? calcSalary(salary, nonTaxable, dependents) : null),
     [salary, nonTaxable, dependents]
   );
+
+  const referenceTable = useMemo(() => {
+    const rows = [];
+    for (let s = TABLE_STEP; s <= TABLE_MAX; s += TABLE_STEP) {
+      const r = calcSalary(s, nonTaxable, dependents);
+      rows.push({ salary: s, netMonthly: r.netMonthly });
+    }
+    return rows;
+  }, [nonTaxable, dependents]);
+
+  const nearestSalary =
+    salary > 0 ? Math.round(salary / TABLE_STEP) * TABLE_STEP : 0;
 
   return (
     <div className="space-y-6">
@@ -200,13 +215,52 @@ export function SalaryCalculator() {
       )}
 
       <Card>
+        <CardContent className="p-6">
+          <h2 className="mb-3 text-base font-semibold">
+            연봉별 월 실수령액 참고표 (100만원 단위, 1억 5천만원까지)
+          </h2>
+          <div className="max-h-[32rem] overflow-auto">
+            <table className="w-full border-collapse text-sm">
+              <thead className="sticky top-0 bg-card">
+                <tr className="border-b border-border text-left text-muted-foreground">
+                  <th className="py-2 pr-3 font-medium">연봉</th>
+                  <th className="py-2 font-medium">월 실수령액</th>
+                </tr>
+              </thead>
+              <tbody className="text-foreground">
+                {referenceTable.map((row) => (
+                  <tr
+                    key={row.salary}
+                    className={
+                      row.salary === nearestSalary
+                        ? "border-b border-border/50 bg-accent/60 font-semibold"
+                        : "border-b border-border/50"
+                    }
+                  >
+                    <td className="py-2 pr-3">
+                      {(row.salary / 10000).toLocaleString("ko-KR")}만원
+                    </td>
+                    <td className="py-2">{formatKRW(row.netMonthly)} 원</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+            입력한 월 비과세액·부양가족 수 기준으로 계산되며, 현재 입력한
+            연봉과 가장 가까운 행이 강조 표시됩니다.
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card>
         <CardContent className="p-6 text-sm leading-relaxed text-muted-foreground">
           <h2 className="mb-2 text-base font-semibold text-foreground">
-            계산 안내
+            계산 안내 (2026년 기준)
           </h2>
           <p>
-            국민연금·건강보험·장기요양보험·고용보험 요율과 근로소득세 간이
-            계산 방식을 반영한 <b className="text-foreground">추정치</b>
+            2026년 국민연금·건강보험·장기요양보험·고용보험 요율과 근로소득세
+            간이 계산 방식을 반영한 <b className="text-foreground">추정치</b>
             입니다. 자녀세액공제 등 개별 세액공제, 회사별 규정, 실제 원천징수
             세액표는 반영되지 않으므로 정확한 금액은 급여명세서 또는 국세청
             간이세액표를 확인하세요.

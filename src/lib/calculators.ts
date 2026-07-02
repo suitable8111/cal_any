@@ -87,7 +87,7 @@ export const calculators: CalculatorMeta[] = [
   {
     slug: "/salary",
     title: "연봉 실수령액 계산기",
-    description: "4대보험과 근로소득세를 제외한 예상 월 실수령액 계산",
+    description: "2026년 기준 4대보험과 근로소득세를 제외한 예상 월 실수령액 계산",
     keywords: [
       "연봉",
       "실수령액",
@@ -101,7 +101,7 @@ export const calculators: CalculatorMeta[] = [
     ],
     emoji: "💵",
     accent: "from-green-500/15 to-emerald-500/10",
-    seo: "연봉과 부양가족 수를 입력하면 국민연금·건강보험·장기요양보험·고용보험·근로소득세·지방소득세를 제외한 예상 월 실수령액을 계산합니다.",
+    seo: "연봉과 부양가족 수를 입력하면 2026년 기준 국민연금·건강보험·장기요양보험·고용보험·근로소득세·지방소득세를 제외한 예상 월 실수령액과 1억 5천만원까지의 연봉별 실수령액 참고표를 계산합니다.",
     category: "financial",
   },
   {
