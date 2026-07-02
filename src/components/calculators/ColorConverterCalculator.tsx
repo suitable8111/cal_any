@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 
 function clamp255(n: number): number {
   return Math.min(255, Math.max(0, Math.round(n)));
@@ -160,6 +161,12 @@ export function ColorConverterCalculator() {
                 {cssRgb}
               </span>
             </div>
+          </div>
+          <div className="mt-4">
+            <ShareButton
+              title="색상 변환 결과"
+              text={`${hex} = ${cssRgb}`}
+            />
           </div>
         </CardContent>
       </Card>

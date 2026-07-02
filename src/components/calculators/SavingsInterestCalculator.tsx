@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatKRW, parseNumber } from "@/lib/utils";
 
 type Product = "deposit" | "installment";
@@ -213,6 +214,12 @@ export function SavingsInterestCalculator() {
             value={`${formatKRW(result.payout)} 원`}
             highlight
           />
+          <div className="mt-4">
+            <ShareButton
+              title="예적금 이자 계산 결과"
+              text={`원금 ${formatKRW(result.principal)}원 → 만기 실수령액 ${formatKRW(result.payout)}원 (세후 이자 ${formatKRW(result.netInterest)}원)`}
+            />
+          </div>
         </ResultBox>
       )}
 

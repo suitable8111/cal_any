@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatKRW, parseNumber } from "@/lib/utils";
 
 type Method = "equalPayment" | "equalPrincipal" | "bullet";
@@ -189,6 +190,12 @@ export function LoanRepaymentCalculator() {
               value={`${formatKRW(schedule.totalPayment)} 원`}
               highlight
             />
+            <div className="mt-4">
+              <ShareButton
+                title="대출 상환 계산 결과"
+                text={`${METHOD_LABEL[method]}: 1회차 상환액 ${formatKRW(schedule.rows[0].payment)}원, 총 이자 ${formatKRW(schedule.totalInterest)}원`}
+              />
+            </div>
           </ResultBox>
 
           <Card>

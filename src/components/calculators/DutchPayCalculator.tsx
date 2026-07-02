@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { cn, formatKRW, parseNumber } from "@/lib/utils";
 
 type Unit = "1" | "100" | "1000";
@@ -262,6 +263,14 @@ export function DutchPayCalculator() {
                 value={`${formatKRW(result.leftoverTotal)} 원`}
               />
             )}
+            <div className="mt-4">
+              <ShareButton
+                title="더치페이 정산 결과"
+                text={`총 ${formatKRW(result.grandTotal)}원 정산! ${people
+                  .map((p) => `${p.name} ${formatKRW(result.totals.get(p.id) ?? 0)}원`)
+                  .join(", ")}`}
+              />
+            </div>
           </ResultBox>
 
           <Card>

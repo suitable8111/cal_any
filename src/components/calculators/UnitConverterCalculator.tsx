@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { OptionGroup } from "@/components/ui/option-group";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatNumber, parseNumber } from "@/lib/utils";
 
 type CategoryKey = "length" | "area" | "weight" | "volume" | "data";
@@ -161,6 +162,16 @@ export function UnitConverterCalculator() {
                 </span>
               </div>
             ))}
+          </div>
+          <div className="mt-4">
+            <ShareButton
+              title="단위 변환 결과"
+              text={`${valueStr} ${units.find((u) => u.key === fromUnit)?.label ?? ""} = ${results
+                .filter((r) => r.key !== fromUnit)
+                .slice(0, 3)
+                .map((r) => `${formatNumber(r.value, 4)} ${r.label}`)
+                .join(", ")}`}
+            />
           </div>
         </CardContent>
       </Card>

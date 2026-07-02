@@ -7,6 +7,7 @@ import { Select } from "@/components/ui/select";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatKRW } from "@/lib/utils";
 
 type Penalty = { fine: number; ticket: number; point: number };
@@ -186,6 +187,16 @@ export function TrafficFineCalculator() {
           label="벌점"
           value={result.point > 0 ? `${result.point}점` : "없음"}
         />
+        <div className="mt-4">
+          <ShareButton
+            title="교통 범칙금·과태료 계산 결과"
+            text={`${result.violation.label}: 과태료 ${
+              result.fine > 0 ? `${formatKRW(result.fine)}원` : "해당없음"
+            }, 범칙금 ${
+              result.ticket > 0 ? `${formatKRW(result.ticket)}원` : "해당없음"
+            }`}
+          />
+        </div>
       </ResultBox>
 
       <Card>

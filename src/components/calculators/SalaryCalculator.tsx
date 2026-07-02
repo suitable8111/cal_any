@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatKRW, parseNumber } from "@/lib/utils";
 
 const PENSION_RATE = 0.045;
@@ -219,6 +220,12 @@ export function SalaryCalculator() {
             value={`${formatKRW(result.netMonthly)} 원`}
             highlight
           />
+          <div className="mt-4">
+            <ShareButton
+              title="연봉 실수령액 계산 결과"
+              text={`연봉 ${salary.toLocaleString("ko-KR")}원의 예상 월 실수령액은 ${formatKRW(result.netMonthly)}원!`}
+            />
+          </div>
         </ResultBox>
       )}
 

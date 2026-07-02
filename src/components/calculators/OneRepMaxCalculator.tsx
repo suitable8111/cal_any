@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatNumber, parseNumber } from "@/lib/utils";
 
 const PERCENT_TABLE: { pct: number; reps: string }[] = [
@@ -105,6 +106,12 @@ export function OneRepMaxCalculator() {
               label="Lombardi 공식"
               value={`${formatNumber(result.lombardi, 1)} kg`}
             />
+            <div className="mt-4">
+              <ShareButton
+                title="1RM 계산 결과"
+                text={`${weight}kg × ${reps}회 → 예상 1RM ${formatNumber(result.average, 1)}kg!`}
+              />
+            </div>
           </ResultBox>
 
           <Card>

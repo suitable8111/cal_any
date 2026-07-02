@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 
 type Base = "2" | "8" | "10" | "16";
 
@@ -132,6 +133,14 @@ export function BaseConverterCalculator() {
                     </span>
                   </div>
                 ))}
+              </div>
+              <div className="mt-4">
+                <ShareButton
+                  title="진법 변환 결과"
+                  text={result.results
+                    .map((r) => `${r.label} ${r.radix === 2 ? groupBinary(r.text) : r.text}`)
+                    .join(", ")}
+                />
               </div>
             </CardContent>
           </Card>

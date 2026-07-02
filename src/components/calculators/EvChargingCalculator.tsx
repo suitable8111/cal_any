@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatKRW, formatNumber } from "@/lib/utils";
 
 type ChargerId = "slow7" | "fast50" | "fast100";
@@ -184,6 +185,12 @@ export function EvChargingCalculator() {
               EFFICIENCY * 100
             }%)`}
           />
+          <div className="mt-4">
+            <ShareButton
+              title="전기차 충전요금 계산 결과"
+              text={`예상 충전 비용 ${formatKRW(result.cost)}원, 충전 시간 ${fmtDuration(result.hours)}`}
+            />
+          </div>
         </ResultBox>
       )}
 

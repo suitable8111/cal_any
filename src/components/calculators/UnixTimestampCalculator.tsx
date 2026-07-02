@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 
 type Unit = "sec" | "ms";
 
@@ -111,6 +112,10 @@ export function UnixTimestampCalculator() {
                   {tsResult.iso}
                 </span>
               </div>
+              <ShareButton
+                title="Unix Timestamp 변환 결과"
+                text={`${tsStr} → ${tsResult.local}`}
+              />
             </div>
           ) : (
             tsStr.trim() !== "" && (
@@ -168,6 +173,10 @@ export function UnixTimestampCalculator() {
                   {dtResult.iso}
                 </span>
               </div>
+              <ShareButton
+                title="Unix Timestamp 변환 결과"
+                text={`${dtStr} → ${dtResult.seconds} (초)`}
+              />
             </div>
           )}
         </CardContent>

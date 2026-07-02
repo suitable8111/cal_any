@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatNumber } from "@/lib/utils";
 
 const ZODIAC = [
@@ -162,6 +163,12 @@ export function AgeCalculator() {
             label="태어난 지"
             value={`${formatNumber(result.daysLived)}일`}
           />
+          <div className="mt-4">
+            <ShareButton
+              title="만 나이 계산 결과"
+              text={`만 나이 ${result.manAge}세 (${result.zodiac}띠), 태어난 지 ${formatNumber(result.daysLived)}일째!`}
+            />
+          </div>
         </ResultBox>
       )}
 

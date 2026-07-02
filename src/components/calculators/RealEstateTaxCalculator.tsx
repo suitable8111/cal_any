@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatKRW, parseNumber } from "@/lib/utils";
 
 type Homes = "1" | "2" | "3" | "4";
@@ -198,6 +199,12 @@ export function RealEstateTaxCalculator() {
             value={`${formatKRW(result.total)} 원`}
             highlight
           />
+          <div className="mt-4">
+            <ShareButton
+              title="부동산 취득세 계산 결과"
+              text={`취득가액 ${formatKRW(price)}원, 예상 총 납부세액 ${formatKRW(result.total)}원(${pct(result.totalRate)})`}
+            />
+          </div>
         </ResultBox>
       )}
 

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatNumber } from "@/lib/utils";
 
 type Mode = "target" | "since";
@@ -200,6 +201,12 @@ export function DdayCalculator() {
             label="주 단위"
             value={`약 ${formatNumber(targetResult.weeks, 1)}주`}
           />
+          <div className="mt-4">
+            <ShareButton
+              title="디데이 계산 결과"
+              text={`${fmtDate(targetResult.date)}까지 ${targetResult.label}!`}
+            />
+          </div>
         </ResultBox>
       )}
 
@@ -220,6 +227,12 @@ export function DdayCalculator() {
               label="주 단위"
               value={`약 ${formatNumber(sinceResult.weeks, 1)}주`}
             />
+            <div className="mt-4">
+              <ShareButton
+                title="디데이 계산 결과"
+                text={`${fmtDate(sinceResult.start)}부터 오늘로 ${formatNumber(sinceResult.nthDay)}일째!`}
+              />
+            </div>
           </ResultBox>
 
           <Card>

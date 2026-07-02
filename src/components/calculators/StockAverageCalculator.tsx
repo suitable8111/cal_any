@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { formatKRW, formatNumber, parseNumber } from "@/lib/utils";
 
 interface BuyRow {
@@ -155,6 +156,12 @@ export function StockAverageCalculator() {
                 : undefined
             }
           />
+          <div className="mt-4">
+            <ShareButton
+              title="주식 평단가 계산 결과"
+              text={`총 ${formatNumber(result.totalQty)}주, 최종 평단가 ${formatKRW(result.newAvg)}원`}
+            />
+          </div>
         </ResultBox>
       )}
 

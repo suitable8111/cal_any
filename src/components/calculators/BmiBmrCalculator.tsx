@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { OptionGroup } from "@/components/ui/option-group";
 import { ResultBox, StatRow } from "@/components/ui/result";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ShareButton } from "@/components/ui/share-button";
 import { cn, formatNumber, parseNumber } from "@/lib/utils";
 
 type Gender = "male" | "female";
@@ -163,6 +164,12 @@ export function BmiBmrCalculator() {
             sub={`${ACTIVITY[activity].label} 기준`}
             highlight
           />
+          <div className="mt-4">
+            <ShareButton
+              title="BMI·기초대사량 계산 결과"
+              text={`BMI ${formatNumber(result.bmi, 1)}(${result.category.label}), 일일 권장 칼로리 ${formatNumber(result.tdee, 0)}kcal`}
+            />
+          </div>
         </ResultBox>
       )}
 

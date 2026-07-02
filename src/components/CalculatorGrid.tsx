@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, Star } from "lucide-react";
 import {
   CATEGORY_LABELS,
   calculators,
@@ -11,6 +11,7 @@ import {
 } from "@/lib/calculators";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useFavorites } from "@/lib/useFavorites";
 
 const CATEGORY_ORDER: CalculatorCategory[] = [
   "financial",
@@ -19,7 +20,15 @@ const CATEGORY_ORDER: CalculatorCategory[] = [
   "dev",
 ];
 
-function CalculatorCard({ c }: { c: CalculatorMeta }) {
+function CalculatorCard({
+  c,
+  favorite,
+  onToggleFavorite,
+}: {
+  c: CalculatorMeta;
+  favorite: boolean;
+  onToggleFavorite: (slug: string) => void;
+}) {
   return (
     <Link
       href={c.slug}
@@ -33,11 +42,26 @@ function CalculatorCard({ c }: { c: CalculatorMeta }) {
           c.accent
         )}
       />
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onToggleFavorite(c.slug);
+        }}
+        aria-label={favorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}
+        aria-pressed={favorite}
+        className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-background/80 text-muted-foreground shadow-sm transition-colors hover:text-amber-500"
+      >
+        <Star
+          className={cn("h-4 w-4", favorite && "fill-amber-400 text-amber-500")}
+        />
+      </button>
       <div className="relative">
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-background/70 text-2xl shadow-sm">
           {c.emoji}
         </div>
-        <h3 className="flex items-center gap-1 text-lg font-semibold tracking-tight">
+        <h3 className="flex items-center gap-1 pr-6 text-lg font-semibold tracking-tight">
           {c.title}
           <ArrowRight className="h-4 w-4 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
         </h3>
@@ -51,6 +75,7 @@ function CalculatorCard({ c }: { c: CalculatorMeta }) {
 
 export function CalculatorGrid() {
   const [query, setQuery] = useState("");
+  const { isFavorite, toggle } = useFavorites();
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -62,6 +87,11 @@ export function CalculatorGrid() {
       return haystack.includes(q);
     });
   }, [query]);
+
+  const favoriteItems = useMemo(
+    () => filtered.filter((c) => isFavorite(c.slug)),
+    [filtered, isFavorite]
+  );
 
   const grouped = useMemo(() => {
     return CATEGORY_ORDER.map((category) => ({
@@ -90,6 +120,25 @@ export function CalculatorGrid() {
         </p>
       ) : (
         <div className="space-y-10">
+          {favoriteItems.length > 0 && (
+            <section>
+              <h2 className="mb-4 flex items-center gap-1.5 text-lg font-bold tracking-tight text-foreground">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
+                즐겨찾기
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+                {favoriteItems.map((c) => (
+                  <CalculatorCard
+                    key={c.slug}
+                    c={c}
+                    favorite={isFavorite(c.slug)}
+                    onToggleFavorite={toggle}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
           {grouped.map(({ category, items }) => (
             <section key={category}>
               <h2 className="mb-4 text-lg font-bold tracking-tight text-foreground">
@@ -97,7 +146,12 @@ export function CalculatorGrid() {
               </h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
                 {items.map((c) => (
-                  <CalculatorCard key={c.slug} c={c} />
+                  <CalculatorCard
+                    key={c.slug}
+                    c={c}
+                    favorite={isFavorite(c.slug)}
+                    onToggleFavorite={toggle}
+                  />
                 ))}
               </div>
             </section>
