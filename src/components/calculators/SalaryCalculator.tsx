@@ -124,7 +124,15 @@ export function SalaryCalculator() {
     const rows = [];
     for (let s = TABLE_STEP; s <= TABLE_MAX; s += TABLE_STEP) {
       const r = calcSalary(s, nonTaxable, dependents);
-      rows.push({ salary: s, netMonthly: r.netMonthly });
+      rows.push({
+        salary: s,
+        pension: r.pension,
+        health: r.health + r.longTermCare,
+        employment: r.employment,
+        tax: r.monthlyIncomeTax + r.monthlyLocalTax,
+        totalDeduction: r.totalDeduction,
+        netMonthly: r.netMonthly,
+      });
     }
     return rows;
   }, [nonTaxable, dependents]);
@@ -220,10 +228,15 @@ export function SalaryCalculator() {
             연봉별 월 실수령액 참고표 (100만원 단위, 1억 5천만원까지)
           </h2>
           <div className="max-h-[32rem] overflow-auto">
-            <table className="w-full border-collapse text-sm">
+            <table className="w-full min-w-[640px] border-collapse text-sm">
               <thead className="sticky top-0 bg-card">
                 <tr className="border-b border-border text-left text-muted-foreground">
                   <th className="py-2 pr-3 font-medium">연봉</th>
+                  <th className="py-2 pr-3 font-medium">국민연금</th>
+                  <th className="py-2 pr-3 font-medium">건강보험(장기요양)</th>
+                  <th className="py-2 pr-3 font-medium">고용보험</th>
+                  <th className="py-2 pr-3 font-medium">소득세(지방세)</th>
+                  <th className="py-2 pr-3 font-medium">공제 합계</th>
                   <th className="py-2 font-medium">월 실수령액</th>
                 </tr>
               </thead>
@@ -237,18 +250,35 @@ export function SalaryCalculator() {
                         : "border-b border-border/50"
                     }
                   >
-                    <td className="py-2 pr-3">
+                    <td className="py-2 pr-3 whitespace-nowrap">
                       {(row.salary / 10000).toLocaleString("ko-KR")}만원
                     </td>
-                    <td className="py-2">{formatKRW(row.netMonthly)} 원</td>
+                    <td className="py-2 pr-3 whitespace-nowrap">
+                      {formatKRW(row.pension)}
+                    </td>
+                    <td className="py-2 pr-3 whitespace-nowrap">
+                      {formatKRW(row.health)}
+                    </td>
+                    <td className="py-2 pr-3 whitespace-nowrap">
+                      {formatKRW(row.employment)}
+                    </td>
+                    <td className="py-2 pr-3 whitespace-nowrap">
+                      {formatKRW(row.tax)}
+                    </td>
+                    <td className="py-2 pr-3 whitespace-nowrap">
+                      {formatKRW(row.totalDeduction)}
+                    </td>
+                    <td className="py-2 whitespace-nowrap">
+                      {formatKRW(row.netMonthly)} 원
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-            입력한 월 비과세액·부양가족 수 기준으로 계산되며, 현재 입력한
-            연봉과 가장 가까운 행이 강조 표시됩니다.
+            입력한 월 비과세액·부양가족 수 기준으로 계산된 월 공제액이며,
+            현재 입력한 연봉과 가장 가까운 행이 강조 표시됩니다. (단위: 원)
           </p>
         </CardContent>
       </Card>
