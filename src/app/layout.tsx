@@ -9,6 +9,14 @@ import { siteConfig } from "@/lib/site";
 
 const GA_MEASUREMENT_ID = "G-W2433ST4YH";
 
+/**
+ * 네이버 서치어드바이저 소유확인용 메타태그 값.
+ * 웹마스터 도구에서 발급받은 <meta name="naver-site-verification" content="..."> 의
+ * content 값을 env 또는 기본값에 채우면 태그가 렌더링됩니다.
+ */
+const NAVER_SITE_VERIFICATION =
+  process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || "";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -68,6 +76,13 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: siteConfig.name,
   },
+  ...(NAVER_SITE_VERIFICATION
+    ? {
+        verification: {
+          other: { "naver-site-verification": NAVER_SITE_VERIFICATION },
+        },
+      }
+    : {}),
 };
 
 export const viewport: Viewport = {
