@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CalculatorGrid } from "@/components/CalculatorGrid";
-import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ResponsiveAdFitBanner } from "@/components/ads/ResponsiveAdFitBanner";
 import { siteConfig } from "@/lib/site";
 import { calculators } from "@/lib/calculators";
 
@@ -36,8 +36,12 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 헤더 바로 아래 가로형 배너 */}
-      <AdFitBanner slot="header" width={728} height={90} className="mb-8" />
+      {/* 헤더 바로 아래 가로형 배너 (데스크톱 728x90 / 모바일 320x100) */}
+      <ResponsiveAdFitBanner
+        desktop={{ slot: "header", width: 728, height: 90 }}
+        mobile={{ slot: "headerMobile", width: 320, height: 100 }}
+        className="mb-8"
+      />
 
       <section className="mb-10 text-center">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">

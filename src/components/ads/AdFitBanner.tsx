@@ -14,6 +14,8 @@ import { cn } from "@/lib/utils";
 export const AD_UNITS = {
   header:
     process.env.NEXT_PUBLIC_ADFIT_UNIT_HEADER || "DAN-X2960oC9n2QqltY4",
+  // 모바일 상단용 320x100 단위 미발급 — 단위 추가 후 env 또는 기본값을 채우면 활성화
+  headerMobile: process.env.NEXT_PUBLIC_ADFIT_UNIT_HEADER_MOBILE || "",
   inContent:
     process.env.NEXT_PUBLIC_ADFIT_UNIT_INCONTENT || "DAN-l5Pbd8v43l5ycB2Q",
   sidebar:

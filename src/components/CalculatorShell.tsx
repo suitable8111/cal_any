@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
+import { ResponsiveAdFitBanner } from "@/components/ads/ResponsiveAdFitBanner";
+import { RelatedCalculators } from "@/components/RelatedCalculators";
 import type { CalculatorMeta } from "@/lib/calculators";
 
 interface CalculatorShellProps {
@@ -16,8 +18,12 @@ interface CalculatorShellProps {
 export function CalculatorShell({ meta, children }: CalculatorShellProps) {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
-      {/* 1. 헤더 바로 아래 가로형 배너 */}
-      <AdFitBanner slot="header" width={728} height={90} className="mb-6" />
+      {/* 1. 헤더 바로 아래 가로형 배너 (데스크톱 728x90 / 모바일 320x100) */}
+      <ResponsiveAdFitBanner
+        desktop={{ slot: "header", width: 728, height: 90 }}
+        mobile={{ slot: "headerMobile", width: 320, height: 100 }}
+        className="mb-6"
+      />
 
       <Link
         href="/"
@@ -39,7 +45,11 @@ export function CalculatorShell({ meta, children }: CalculatorShellProps) {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
-        <div className="min-w-0">{children}</div>
+        <div className="min-w-0">
+          {children}
+          {/* 관련 계산기 추천 — 내부 순환(페이지/세션) 증가 목적 */}
+          <RelatedCalculators current={meta} />
+        </div>
 
         {/* 3. 사이드바 광고 (데스크톱 전용, sticky) */}
         <aside className="hidden lg:block">
