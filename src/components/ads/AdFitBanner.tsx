@@ -14,14 +14,16 @@ import { cn } from "@/lib/utils";
 export const AD_UNITS = {
   header:
     process.env.NEXT_PUBLIC_ADFIT_UNIT_HEADER || "DAN-X2960oC9n2QqltY4",
-  // 모바일 상단용 320x100 단위 미발급 — 단위 추가 후 env 또는 기본값을 채우면 활성화
-  headerMobile: process.env.NEXT_PUBLIC_ADFIT_UNIT_HEADER_MOBILE || "",
+  headerMobile:
+    process.env.NEXT_PUBLIC_ADFIT_UNIT_HEADER_MOBILE || "DAN-x7fozam0o5w9eyCZ",
   inContent:
     process.env.NEXT_PUBLIC_ADFIT_UNIT_INCONTENT || "DAN-l5Pbd8v43l5ycB2Q",
   sidebar:
     process.env.NEXT_PUBLIC_ADFIT_UNIT_SIDEBAR || "DAN-YLnUp8hh3dzmo33G",
-  // 푸터용 728x90 단위 미발급 — 단위 추가 후 env 또는 기본값을 채우면 활성화
-  footer: process.env.NEXT_PUBLIC_ADFIT_UNIT_FOOTER || "",
+  footer:
+    process.env.NEXT_PUBLIC_ADFIT_UNIT_FOOTER || "DAN-Kcjez3RhWBg7dxnx",
+  // 푸터 모바일용 단위 미발급 — 단위 추가 후 env 또는 기본값을 채우면 활성화
+  footerMobile: process.env.NEXT_PUBLIC_ADFIT_UNIT_FOOTER_MOBILE || "",
 } as const;
 
 export type AdSlot = keyof typeof AD_UNITS;
