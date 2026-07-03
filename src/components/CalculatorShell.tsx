@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { AdFitBanner } from "@/components/ads/AdFitBanner";
 import { ResponsiveAdFitBanner } from "@/components/ads/ResponsiveAdFitBanner";
+import { FaqSection } from "@/components/FaqSection";
 import { RelatedCalculators } from "@/components/RelatedCalculators";
 import type { CalculatorMeta } from "@/lib/calculators";
 
@@ -47,6 +48,8 @@ export function CalculatorShell({ meta, children }: CalculatorShellProps) {
       <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
         <div className="min-w-0">
           {children}
+          {/* FAQ — 롱테일 검색 유입 + FAQPage 구조화 데이터 */}
+          <FaqSection slug={meta.slug} />
           {/* 관련 계산기 추천 — 내부 순환(페이지/세션) 증가 목적 */}
           <RelatedCalculators current={meta} />
         </div>
