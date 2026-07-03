@@ -10,12 +10,15 @@ import { siteConfig } from "@/lib/site";
 const GA_MEASUREMENT_ID = "G-W2433ST4YH";
 
 /**
- * 네이버 서치어드바이저 소유확인용 메타태그 값.
- * 웹마스터 도구에서 발급받은 <meta name="naver-site-verification" content="..."> 의
- * content 값을 env 또는 기본값에 채우면 태그가 렌더링됩니다.
+ * 검색엔진 소유확인용 메타태그 값 (네이버 서치어드바이저 / 구글 서치콘솔).
+ * 각 도구에서 발급받은 content 값을 env 또는 기본값에 채우면 렌더링됩니다.
  */
 const NAVER_SITE_VERIFICATION =
-  process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || "";
+  process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION ||
+  "386b1d6bfb193f5906901fca292bd87ebef8eaf5";
+const GOOGLE_SITE_VERIFICATION =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  "Tt8FSnxNkdZqVImwvNjy28GuWfewWgGV82NZ2W7VMV0";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,13 +79,12 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: siteConfig.name,
   },
-  ...(NAVER_SITE_VERIFICATION
-    ? {
-        verification: {
-          other: { "naver-site-verification": NAVER_SITE_VERIFICATION },
-        },
-      }
-    : {}),
+  verification: {
+    ...(GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : {}),
+    ...(NAVER_SITE_VERIFICATION
+      ? { other: { "naver-site-verification": NAVER_SITE_VERIFICATION } }
+      : {}),
+  },
 };
 
 export const viewport: Viewport = {
