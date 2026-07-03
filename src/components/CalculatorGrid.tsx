@@ -15,6 +15,7 @@ import { useFavorites } from "@/lib/useFavorites";
 
 const CATEGORY_ORDER: CalculatorCategory[] = [
   "financial",
+  "work",
   "lifestyle",
   "health",
   "dev",

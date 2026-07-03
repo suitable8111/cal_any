@@ -1,7 +1,13 @@
-export type CalculatorCategory = "financial" | "lifestyle" | "health" | "dev";
+export type CalculatorCategory =
+  | "financial"
+  | "work"
+  | "lifestyle"
+  | "health"
+  | "dev";
 
 export const CATEGORY_LABELS: Record<CalculatorCategory, string> = {
   financial: "금융 · 재테크",
+  work: "직장 · 노무",
   lifestyle: "일상 · 생활",
   health: "건강 · 운동",
   dev: "개발 · IT",
@@ -102,7 +108,82 @@ export const calculators: CalculatorMeta[] = [
     emoji: "💵",
     accent: "from-green-500/15 to-emerald-500/10",
     seo: "연봉과 부양가족 수를 입력하면 2026년 기준 국민연금·건강보험·장기요양보험·고용보험·근로소득세·지방소득세를 제외한 예상 월 실수령액과 1억 5천만원까지의 연봉별 실수령액 참고표를 계산합니다.",
-    category: "financial",
+    category: "work",
+  },
+  {
+    slug: "/severance-pay",
+    title: "퇴직금 계산기",
+    description: "입사일·퇴사일과 3개월 평균임금으로 예상 퇴직금을 계산",
+    keywords: [
+      "퇴직금",
+      "퇴직금계산",
+      "평균임금",
+      "퇴직급여",
+      "근속연수",
+      "재직일수",
+      "severance",
+    ],
+    emoji: "💼",
+    accent: "from-purple-500/15 to-indigo-500/10",
+    seo: "입사일과 퇴사일, 퇴직 전 3개월 월평균 임금, 연간 상여금, 연차수당을 입력하면 고용노동부 산정 방식(1일 평균임금 × 30일 × 재직일수/365)에 따른 예상 퇴직금을 계산합니다.",
+    category: "work",
+  },
+  {
+    slug: "/unemployment-benefit",
+    title: "실업급여 계산기",
+    description: "나이·고용보험 가입기간·평균임금으로 구직급여 일액과 총 수령액 계산",
+    keywords: [
+      "실업급여",
+      "구직급여",
+      "고용보험",
+      "소정급여일수",
+      "실업급여계산",
+      "상한액",
+      "하한액",
+      "unemployment",
+    ],
+    emoji: "🛟",
+    accent: "from-sky-500/15 to-blue-500/10",
+    seo: "퇴사 시 만 나이, 고용보험 가입기간, 퇴직 전 3개월 월평균 임금을 입력하면 구직급여(실업급여) 1일 지급액과 소정급여일수, 총 예상 수령액을 계산합니다. 상한액·하한액 기준을 자동 반영합니다.",
+    category: "work",
+  },
+  {
+    slug: "/weekly-holiday-pay",
+    title: "주휴수당 계산기",
+    description: "시급과 주 근로시간으로 주휴수당·주급·월 예상급여 계산 (알바 필수)",
+    keywords: [
+      "주휴수당",
+      "주휴수당계산",
+      "알바",
+      "아르바이트",
+      "시급",
+      "최저임금",
+      "주급",
+      "월급환산",
+    ],
+    emoji: "⏰",
+    accent: "from-rose-500/15 to-orange-500/10",
+    seo: "시급과 1주 소정근로시간을 입력하면 주휴수당 지급 조건(주 15시간 이상) 충족 여부와 주휴수당, 주휴수당을 포함한 주급·월 예상급여를 2026년 최저임금 기준으로 계산합니다.",
+    category: "work",
+  },
+  {
+    slug: "/annual-leave",
+    title: "연차 계산기",
+    description: "입사일 기준 발생 연차 개수와 미사용 연차수당을 한 번에 계산",
+    keywords: [
+      "연차",
+      "연차계산",
+      "연차개수",
+      "연차수당",
+      "유급휴가",
+      "미사용연차",
+      "통상임금",
+      "annual leave",
+    ],
+    emoji: "🌴",
+    accent: "from-teal-500/15 to-emerald-500/10",
+    seo: "입사일과 기준일을 입력하면 근로기준법에 따른 발생 연차 개수(1년 미만 월 단위 연차 포함, 최대 25일)를 계산하고, 월 통상임금 기준 미사용 연차수당까지 함께 확인할 수 있습니다.",
+    category: "work",
   },
   {
     slug: "/dutch-pay",
